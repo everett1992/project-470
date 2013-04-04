@@ -12,7 +12,7 @@
     = f.text_area :description, class: 'span8', rows: 5
   .field
     = f.label :when
-    = f.date_select :date, {}, class: 'input-small'
+    = calendar_datepicker(:date, f, class: 'input-small')
   .field
     = f.time_select :date, { ignore_date: true, minute_step: 15 }, class: 'input-mini'
   .field
