@@ -17,7 +17,7 @@
     = f.text_field :amount
   .field
     = f.label :date_due
-    = f.date_select :date_due
+    = calendar_datepicker(:date_due, f)
   .field
     = f.label :status
     = f.text_field :status
