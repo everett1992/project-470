@@ -1,14 +1,13 @@
-class Event < ActiveRecord::Base
-	scope :upcoming, order(:date).where(['date >= ?', Date.today]).limit(4)
-  belongs_to :dwelling
-  belongs_to :user
+class Event < DwellingItem
+	# Accessible Attributes
   attr_accessible :date, :description, :name
 
-  validates :user, :presence => true
-  validates :dwelling, :presence => true
-
+	# Validations
   validates :name, :presence => true
-  validates :date, :presence => true
   validates :description, :presence => true
 
+  validates :date, :presence => true
+
+	# Scopes
+	scope :upcoming, order(:date).where(['date >= ?', Date.today]).limit(4)
 end

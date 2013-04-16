@@ -1,11 +1,14 @@
 .feed-container
   .inner-body
     .speech-box
-      = form_for Message.new do |message|
-        = message.text_area :body, :class => 'text-bubble', :placeholder => "What do you wanna tell your roomies?", rows: 1, :id => 'comment-input';
-        = message.submit "Post", :class => "submit-comment-button btn btn-large btn-inverse"
+      = form_for Post.new do |f|
+        = f.text_area :body, :class => 'text-bubble', :placeholder => "What do you wanna tell your roomies?", rows: 1, :id => 'comment-input';
+        = f.submit "Post", :class => "submit-comment-button btn btn-large btn-inverse"
     .feed-info-container  
       %h3
         Dwelling Feed
       - messages.each do |message|
-        = render 'messages/details', message: message
+        - if message.is_a? Post
+          = render 'posts/details', post: message
+        - elsif message.is_a? Notification
+          = render 'notifications/details', notification: message

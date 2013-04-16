@@ -30,18 +30,24 @@ def create_user(user_num, dwelling_num, dwelling)
 end
 
 def create_bill(name, dwelling)
-    bill = dwelling.bills.create(
+    bill = dwelling.bills.build(
       name: name,
       owed_to: Faker::Company.name, 
       amount: 800.55 + rand(500),
       date_due: Date.today.next_month,
       status: 'unpaid'
     )
+		bill.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
+		bill.save
+
 		return bill
 end
 
 def create_shopping_list(name, items, dwelling)
-	shopping_list = dwelling.shopping_lists.create(name: name)
+	shopping_list = dwelling.shopping_lists.build(name: name)
+	shopping_list.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
+	shopping_list.save
+
 	items.each do |item_name|
 		shopping_list.shopping_list_items.create(name: item_name)
 	end
@@ -53,8 +59,10 @@ def create_chore(name, dwelling)
 		name: name,
 		description: Faker::Lorem.sentences(3).join
 	)
+	chore.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
 	chore.assigned_user = dwelling.users.all[Random.rand(dwelling.users.size)]
 	chore.save
+
 	return chore
 end
 
@@ -65,22 +73,30 @@ def create_event(name, past, dwelling)
 		time = Time.now + Random.rand(1.week)
 	end
 
-	event = Event.create(
+	event = dwelling.events.build(
 		name: name,
 		description: Faker::Lorem.sentences(3).join,
 		date: time
 	)
-	event.user = dwelling.users.all[Random.rand(dwelling.users.size)]
-	event.dwelling = dwelling
+	event.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
 	event.save
+
 	return event
 end
 
 def create_message(dwelling)
-	message = dwelling.messages.new(body: Faker::Lorem.sentences(3).join)
+	#message = Post.new(body: Faker::Lorem.sentences(3).join)
+	#message.created_at = Time.now - Random.rand(1.week)
+	#message.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
+	#message.dwelling = dwelling
+	#message.save
+
+	message = dwelling.posts.build(body: Faker::Lorem.sentences(3).join)
 	message.created_at = Time.now - Random.rand(1.week)
-	message.user = dwelling.users.all[Random.rand(dwelling.users.size)]
+	message.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
 	message.save
+
+	return message
 end
 
 # Create 10 dwellings with owners

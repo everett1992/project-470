@@ -26,6 +26,14 @@
 %br
 %br
 
+  .body-container
+    .feed-container
+      .inner-body
+        .feed-info-container  
+          %br
+          = render 'comments/all', dwelling_item: @shopping_list
+
+
 = link_to 'Change Name', edit_shopping_list_path(@shopping_list)
 \|
 = link_to 'Back to lists', shopping_lists_path

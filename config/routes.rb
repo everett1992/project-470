@@ -1,15 +1,5 @@
 Roomie::Application.routes.draw do
 
-  resources :messages
-
-
-  resources :shopping_list_items
-
-
-  resources :shopping_lists
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
 
   # route to join a dwelling using an invite url
   match 'invites/:token/accpet' => 'invites#accept', :as => 'invites_accept'
@@ -20,24 +10,38 @@ Roomie::Application.routes.draw do
     resources :invites, :controller => 'dwelling_invites', :except => [:show]
   end
 
-	# Chores
-  resources :chores
-
-	# Events
-  resources :events
-
 	# Bills
   get 'payments' => 'bill_payments#history', :as => 'history'
-
   resources :bills do
+    resources :comments
     resources :bill_payments
   end
 
 	# Shopping Lists
   resources :shopping_lists do
+    resources :comments
     resources :shopping_list_items
   end
 
+	# Chores
+  resources :chores do
+		resources :comments
+	end
+
+	# Events
+  resources :events do
+		resources :comments
+	end
+
+	# Comments
+	resources :comments do
+		resources :comments
+	end
+
+	# Posts
+  resources :posts do
+		resources :comments
+	end
 
 	# Users and signup
   get 'signup' => 'users#new', :as => 'signup'

@@ -7,12 +7,19 @@
   %b Description:
   = @chore.description
 %p
-  %b Assigned user:
-  = @chore.assigned_user_id
+  %b Owner:
+  = @chore.owner.name
 %p
-  %b Dwelling:
-  = @chore.dwelling_id
+  %b Assigned user:
+  = @chore.assigned_user.name
 
-= link_to 'Edit', edit_chore_path(@chore)
-\|
-= link_to 'Back', chores_path
+.body-container
+  .feed-container
+    .inner-body
+      .feed-info-container  
+        %br
+        = render 'comments/all', dwelling_item: @chore 
+
+  = link_to 'Edit', edit_chore_path(@chore)
+  \|
+  = link_to 'Back', chores_path

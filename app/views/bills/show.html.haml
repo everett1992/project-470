@@ -1,4 +1,11 @@
 = render 'bills/details', bill: @bill
 
+.body-container
+  .feed-container
+    .inner-body
+      .feed-info-container  
+        %br
+        = render 'comments/all', dwelling_item: @bill 
+
 %hr
 = link_to 'Back', bills_path

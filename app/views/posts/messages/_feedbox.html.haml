@@ -1,0 +1,20 @@
+.feed-container
+  .inner-body
+    .speech-box
+      = form_for Message.new do |message|
+        = message.text_area :body, :class => 'text-bubble', :placeholder => "What do you wanna tell your roomies?", rows: 1, :id => 'comment-input';
+        = message.submit "Post", :class => "submit-comment-button btn btn-large btn-inverse"
+    .feed-info-container  
+      %h3
+        Dwelling Feed
+      - messages.each do |message|
+        - if message.is_a? Post
+          = render 'messages/details', message: message
+        - else
+          .feed-post
+            %ul.media-list
+              %li.media
+                .media-body
+                  %small(style="float:right; margin-right:5px;")
+                    #{distance_of_time_in_words_to_now message.created_at} ago
+                  =message.body

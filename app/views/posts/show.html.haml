@@ -1,0 +1,10 @@
+.body-container
+  .feed-container
+    .inner-body
+      .feed-info-container  
+        %br
+        = render 'details', post: @post
+
+      .feed-info-container  
+        %br
+        = render 'comments/all', dwelling_item: @post

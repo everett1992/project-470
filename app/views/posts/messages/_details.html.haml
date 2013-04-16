@@ -5,14 +5,14 @@
         %img.media-object(data-src="holder.js/64x64")
       .media-body
         %h4.media-heading
-          #{message.user.name}
+          #{message.owner.name}
           %small
             posted a text
           %small(style="float:right; margin-right:5px;")
             #{distance_of_time_in_words_to_now message.created_at} ago
-            - if current_user == message.user
+            - if current_user == message.owner
               = link_to edit_message_path(message) do
                 %i.icon-edit
-              = link_to(message, method: :delete) do
+              = link_to(message_path(message), method: :delete) do
                 %i.icon-remove
         =message.body

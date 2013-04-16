@@ -1,2 +1,8 @@
 .body-container
-  = render 'events/details', event: @event
+  .feed-container
+    .inner-body
+      = render 'events/details', event: @event
+
+      .feed-info-container  
+        %br
+        = render 'comments/all', dwelling_item: @event 

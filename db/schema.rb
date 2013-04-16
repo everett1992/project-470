@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130413182617) do
+ActiveRecord::Schema.define(:version => 20130416191136) do
 
   create_table "bill_payments", :force => true do |t|
     t.integer  "user_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
     t.integer  "dwelling_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "owner_id"
   end
 
   add_index "bills", ["date_due"], :name => "index_bills_on_date_due"
@@ -46,6 +47,7 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
     t.integer  "dwelling_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "owner_id"
   end
 
   create_table "dwellings", :force => true do |t|
@@ -60,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
 
   create_table "events", :force => true do |t|
     t.integer  "dwelling_id"
-    t.integer  "user_id"
+    t.integer  "owner_id"
     t.string   "name"
     t.text     "description"
     t.datetime "date"
@@ -70,7 +72,7 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
 
   add_index "events", ["date"], :name => "index_events_on_date"
   add_index "events", ["dwelling_id"], :name => "index_events_on_dwelling_id"
-  add_index "events", ["user_id"], :name => "index_events_on_user_id"
+  add_index "events", ["owner_id"], :name => "index_events_on_user_id"
 
   create_table "invites", :force => true do |t|
     t.string   "token"
@@ -86,9 +88,12 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
   create_table "messages", :force => true do |t|
     t.string   "body"
     t.integer  "dwelling_id"
-    t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "owner_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "type"
+    t.integer  "dwelling_item_id"
+    t.string   "dwelling_item_type"
   end
 
   create_table "shopping_list_items", :force => true do |t|
@@ -100,6 +105,7 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
     t.integer  "shopping_list_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "owner_id"
   end
 
   create_table "shopping_lists", :force => true do |t|
@@ -107,6 +113,7 @@ ActiveRecord::Schema.define(:version => 20130413182617) do
     t.integer  "dwelling_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "owner_id"
   end
 
   create_table "users", :force => true do |t|

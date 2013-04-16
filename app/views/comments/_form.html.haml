@@ -1,0 +1,10 @@
+= form_for [dwelling_item, comment] do |f|
+  - if comment.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(comment.errors.count, "error")} prohibited this event from being saved:"
+      %ul
+        - comment.errors.full_messages.each do |msg|
+          %li= msg
+  .speech-box
+    = f.text_area :body, rows: 1, :id => 'comment-input';
+    = f.submit "Reply", :class => "submit-comment-button btn btn-large btn-inverse"
