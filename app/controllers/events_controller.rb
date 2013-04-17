@@ -30,7 +30,7 @@
   # GET /events/new
   # GET /events/new.json
   def new
-    @event = @dwelling.events.build
+    @event = Event.new
     @event.date = Time.now
 
     respond_to do |format|

@@ -10,10 +10,27 @@
     = f.text_field :name, placeholder: 'Name', class: 'input-block-level'
   .controls
     = f.text_area :description, rows: 5, class: 'input-block-level'
+
+  .controls
+    = f.text_field :name, placeholder: 'Related', class: 'input-block-level', data_behaviour: 'tagpicker', autocomplete: 'off'
+    .tags.hide
+      - current_dwelling.tag_suggestions.each do |suggestion|
+        .btn.btn-block{data_name: suggestion.name, data_id: suggestion.id, data_type: suggestion.class}
+          - case suggestion.class.to_s
+          - when 'Chore' then
+            %i.icon-ok
+          - when 'Bill' then
+            %i.icon-tags
+          - when 'Event' then
+            %i.icon-calendar
+          - when 'ShoppingList' then
+            %i.icon-list
+          = suggestion.name
+
   .controls
     = f.label :when
     = calendar_datepicker :date, f, class: 'input-small'
   .controls
     = f.time_select :date, { ignore_date: true, ampm: true, minute_step: 15 }, class: 'input-small'
   .controls
-    = f.submit 'Save'
+    = f.submit 'Save', class: 'btn'
