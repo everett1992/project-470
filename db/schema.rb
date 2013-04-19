@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130416191136) do
+ActiveRecord::Schema.define(:version => 20130418033858) do
 
   create_table "bill_payments", :force => true do |t|
     t.integer  "user_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20130416191136) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "owner_id"
+    t.integer  "group_id"
   end
 
   add_index "bills", ["date_due"], :name => "index_bills_on_date_due"
@@ -48,6 +49,7 @@ ActiveRecord::Schema.define(:version => 20130416191136) do
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
     t.integer  "owner_id"
+    t.integer  "group_id"
   end
 
   create_table "dwellings", :force => true do |t|
@@ -68,11 +70,15 @@ ActiveRecord::Schema.define(:version => 20130416191136) do
     t.datetime "date"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "group_id"
   end
 
   add_index "events", ["date"], :name => "index_events_on_date"
   add_index "events", ["dwelling_id"], :name => "index_events_on_dwelling_id"
   add_index "events", ["owner_id"], :name => "index_events_on_user_id"
+
+  create_table "groups", :force => true do |t|
+  end
 
   create_table "invites", :force => true do |t|
     t.string   "token"
@@ -94,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20130416191136) do
     t.string   "type"
     t.integer  "dwelling_item_id"
     t.string   "dwelling_item_type"
+    t.integer  "group_id"
   end
 
   create_table "shopping_list_items", :force => true do |t|
@@ -114,6 +121,7 @@ ActiveRecord::Schema.define(:version => 20130416191136) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.integer  "owner_id"
+    t.integer  "group_id"
   end
 
   create_table "users", :force => true do |t|

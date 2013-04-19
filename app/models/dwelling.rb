@@ -28,4 +28,12 @@ class Dwelling < ActiveRecord::Base
     self.owner.dwelling = self
     self.owner.save
   end
+
+	def named_items
+		return []
+			.concat(self.bills)
+			.concat(self.chores)
+			.concat(self.shopping_lists)
+			.concat(self.events)
+	end
 end

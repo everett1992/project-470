@@ -4,9 +4,11 @@ class DwellingItem < ActiveRecord::Base
 
 	# Relations
   belongs_to :dwelling
+  belongs_to :group
   belongs_to :owner, :class_name => 'User'
 
 	has_many :comments, :as => :dwelling_item
+	has_many :items, :through => :group
 
 	# Validations
   validates :dwelling, :presence => true
