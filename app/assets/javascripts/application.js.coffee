@@ -18,16 +18,31 @@
 #= require_tree .
 
 $(document).ready ->
-  # attatch a datepicker to inputs with the datepicker behavior
-  $("[data_behaviour='datepicker']").datepicker(
-      format: 'mm/dd/yyyy',
-      weekStart: 1,
-      autoClose: true
-    ).on 'change', (ev) ->
-  
-      # [month, day, year]
-      date_array =  ev.currentTarget.value.split('/')
-      input_id = ev.currentTarget.id
-      $(ev.currentTarget).siblings("##{input_id}_1i").val(parseInt(date_array[2])) # Year
-      $(ev.currentTarget).siblings("##{input_id}_2i").val(parseInt(date_array[0])) # Month
-      $(ev.currentTarget).siblings("##{input_id}_3i").val(parseInt(date_array[1])) # Day
+	$("[data_behaviour='tagpicker']").on('keyup', (ev) ->
+		search = this.value
+		tags = $(this).next('.tags')
+		if search.length > 0
+			tags.show()
+			pattern = RegExp(this.value, 'i')
+			for suggestion in tags.children()
+				if suggestion.getAttribute('data_name').match(pattern)
+					$(suggestion).show()
+				else
+					$(suggestion).hide()
+		else
+			tags.hide()
+	)
+
+	# attatch a datepicker to inputs with the datepicker behavior
+	$("[data_behaviour='datepicker']").datepicker(
+			format: 'mm/dd/yyyy',
+			weekStart: 1,
+			autoClose: true
+		).on 'change', (ev) ->
+	
+			# [month, day, year]
+			date_array = ev.currentTarget.value.split('/')
+			input_id = ev.currentTarget.id
+			$(ev.currentTarget).siblings("##{input_id}_1i").val(parseInt(date_array[2])) # Year
+			$(ev.currentTarget).siblings("##{input_id}_2i").val(parseInt(date_array[0])) # Month
+			$(ev.currentTarget).siblings("##{input_id}_3i").val(parseInt(date_array[1])) # Day

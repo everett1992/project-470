@@ -24,6 +24,17 @@ class Dwelling < ActiveRecord::Base
 	# Callbacks
   after_save :ensure_owner_has_this_dwelling
 
+	def tag_suggestions
+		items = []
+		items.concat self.chores
+		items.concat self.shopping_lists
+		items.concat self.bills
+		items.concat self.events
+		return items
+	end
+
+	private
+
   def ensure_owner_has_this_dwelling
     self.owner.dwelling = self
     self.owner.save

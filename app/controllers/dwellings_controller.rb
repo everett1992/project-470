@@ -1,12 +1,12 @@
 # Administration controller for dwelling owner
 class DwellingsController < ApplicationController
-  before_filter :logged_in?
-  before_filter :except => [:new, :create] do |c|
-    c.dwelling_member?(params[:id].to_i)
-  end
-  before_filter :only => [:edit, :update, :destroy] do |c|
-    c.dwelling_owner?(params[:id].to_i)
-  end
+  #before_filter :logged_in?
+  #before_filter :except => [:new, :create] do |c|
+  #  c.dwelling_member?(params[:id].to_i)
+  #end
+  #before_filter :only => [:edit, :update, :destroy] do |c|
+  #  c.dwelling_owner?(params[:id].to_i)
+  #end
 
   # GET /dwellings/1
   def show

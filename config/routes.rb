@@ -10,6 +10,10 @@ Roomie::Application.routes.draw do
     resources :invites, :controller => 'dwelling_invites', :except => [:show]
   end
 
+	resources :tags do
+		get 'suggestions', on: :collection
+	end
+
 	# Bills
   get 'payments' => 'bill_payments#history', :as => 'history'
   resources :bills do
