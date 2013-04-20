@@ -1,6 +1,18 @@
 require 'bundler/capistrano'
 require 'rvm/capistrano'
 
+before 'deploy:setup', 'rvm:install_rvm'
+#after 'rvm:install_rvm', 'rvm:enable_auto_libs'
+before 'deploy:setup', 'rvm:install_ruby'
+
+namespace :rvm do
+	task :enable_auto_libs do
+		run 'rvm autolibs enable'
+	end
+end
+
+set :rvm_ruby_string, 'ruby-2.0.0-p0'
+
 set :application, "roomie"
 set :deploy_to, "/home/ubuntu/#{application}"
 
@@ -22,6 +34,8 @@ server '54.235.87.183', # Everett's ec2 server
  	:web,
  	:db,
  	:primary => true
+server '54.225.104.65',
+  :app, :web
 
 # if you want to clean up old releases on each deploy uncomment this:
 set :keep_releases, 2
