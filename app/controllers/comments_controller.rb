@@ -1,5 +1,7 @@
 class CommentsController < DwellingItemsController
 	before_filter :get_dwelling_item_and_comment
+	before_filter :ensure_comment_belongs_to_ocurrent_user, 
+		only: [:edit, :update, :destroy]
 
 	def show
 	end
@@ -16,6 +18,23 @@ class CommentsController < DwellingItemsController
         format.html { render :new }
       end
 		end
+	end
+
+	def edit
+	end
+
+	def update
+		if @comment.update_attributes(params[:comment])
+			redirect_to @comment.dwelling_item
+		else
+			render :edit
+		end
+	end
+
+	def destroy
+		@comment.destroy
+
+		redirect_to @comment.dwelling_item
 	end
 
 	private
@@ -57,6 +76,12 @@ class CommentsController < DwellingItemsController
 			else
 				@comment = @dwelling.comments.find(params[:id])
 			end
+		end
+	end
+
+	def ensure_comment_belongs_to_ocurrent_user
+		unless @comment.owner == current_user
+			permission_denied
 		end
 	end
 end
