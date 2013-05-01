@@ -1,10 +1,16 @@
 class UsersController < ApplicationController
-  # Only a user can see their stuff
-  before_filter :is_self?, except: [:new, :create]
+	layout Proc.new { |controller| current_dwelling ? 'dwelling_layout' : 'application' }
+	before_filter :load_upcoming_items, if: :current_dwelling
 
   # GET /users/:id
   def show
     @user = User.find(params[:id])
+
+		@bills = @user.bills
+		@chores = @user.chores
+		@shopping_lists = @user.shopping_lists
+		@events = @user.events
+		@posts = @user.posts
 
     respond_to do |format|
       format.html # show.html.erb
@@ -36,7 +42,7 @@ class UsersController < ApplicationController
       if @user.save
         format.html { redirect_to root_path, notice: 'User was successfully created.' }
       else
-        format.html { render action: "new" }
+        format.html { render :new}
       end
     end
   end
@@ -49,25 +55,18 @@ class UsersController < ApplicationController
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit}
       end
     end
   end
 
   # DELETE /users/:id
   def destroy
-    @user = User.find(params[:id])
+    @user = current_user
     @user.destroy
 
     respond_to do |format|
       format.html { redirect_to users_url }
     end
   end
-
-  private
-    def is_self?
-      unless current_user && current_user.id == params[:id].to_i
-        permission_denied
-      end
-    end
 end

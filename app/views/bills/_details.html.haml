@@ -3,6 +3,8 @@
     = bill.name
     %small
       = ' - ' + bill.owed_to
+    %small.pull-right
+      = bill.owner.name
   .bill-details
     %span.amount-due
       %p
@@ -22,7 +24,7 @@
         - else
           %small= "("+date_rem.to_s + " days)"
     %span.status
-      %p 
+      %p
         Status
       - payment_sum = bill.payment_sum
       %h3{:class => (payment_sum < bill.amount ? 'unpaid' : 'paid')}
@@ -30,6 +32,7 @@
     .show-bill-options
       .contents
         = link_to 'Show', bill_path(bill), class: 'btn btn-success btn-small'
-        = link_to 'Edit', edit_bill_path(bill), class: 'btn btn-warning btn-small'
-        = link_to 'Destroy', bill_path(bill), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-small'
+        - if current_user == bill.owner
+          = link_to 'Edit', edit_bill_path(bill), class: 'btn btn-warning btn-small'
+          = link_to 'Destroy', bill_path(bill), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-small'
 %br

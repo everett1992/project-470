@@ -15,14 +15,14 @@ class InvitesController < ApplicationController
     end
   end
 
-  # Add the user to the dwelling they were 
+  # Add the user to the dwelling they were
   # invited to.
   # GET /invites/:token/accept
   def accept
     @invite = Invite.find_by_token(params[:token])
     if @invite
       current_user.dwelling = @invite.dwelling
-      current_user.save
+      current_user.save!
     end
     @invite.destroy
     respond_to do |format|

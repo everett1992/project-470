@@ -1,0 +1,17 @@
+.shopping-list{:onclick=> "location.href='shopping_lists/#{shopping_list.id}'"}
+  .shopping-list-cover
+    .shopping-list-header
+      = shopping_list.name
+    .item-count
+      .edit-icons.pull-right
+        - if current_user == shopping_list.owner
+          = link_to [:edit, shopping_list] do
+            %i.icon-edit
+          = link_to(shopping_list, method: :delete) do
+            %i.icon-remove
+      %h3= pluralize(shopping_list.shopping_list_items.count, 'item') + ''
+
+%br
+%td= link_to 'Destroy', shopping_list, :method => :delete, :data => { :confirm => 'Are you sure?' }
+%br
+%br

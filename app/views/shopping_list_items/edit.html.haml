@@ -1,6 +1,6 @@
 %h1
-  ="Edit item" 
+  ="Edit item"
 
 = render 'form'
-= link_to 'Delete', shopping_list_item_path(@shopping_list_item), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-small'
+= link_to 'Delete', shopping_list_shopping_list_item_path(@shopping_list_item, :shopping_list_id => @shopping_list.id), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-small'
 = link_to 'Back', shopping_list_path(@shopping_list_item.shopping_list_id)

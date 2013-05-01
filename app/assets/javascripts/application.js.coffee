@@ -18,6 +18,9 @@
 #= require_tree .
 
 $(document).ready ->
+	# Render tool tips on hover
+  $("[data-toggle='tooltip']").tooltip(placement: 'bottom')
+
   # attatch a datepicker to inputs with the datepicker behavior
   $("[data_behaviour='datepicker']").datepicker(
       format: 'mm/dd/yyyy',

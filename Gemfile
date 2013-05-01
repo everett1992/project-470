@@ -10,7 +10,7 @@ gem 'mysql2', group: :production
 gem 'aws-sdk'
 
 
-gem 'twitter-bootstrap-rails' 
+gem 'twitter-bootstrap-rails'
 gem 'haml'
 
 # Gems used only for assets and not required
