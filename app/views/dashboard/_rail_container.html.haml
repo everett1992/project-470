@@ -6,7 +6,7 @@
   - collection.each do |item|
     %li.list-object
       %a{href: url_for(item), style: "width: 100%;"}
-        %span=item.method(row_title).call
+        %span=item.name
         - if date_method ||= nil
           %span.muted.pull-right
             - if item.method(date_method).call.to_time < Time.now

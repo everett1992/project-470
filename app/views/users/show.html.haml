@@ -1,13 +1,44 @@
 %p#notice= notice
 
-%p
-  %b First name:
-  = @user.first_name
-%p
-  %b Last name:
-  = @user.last_name
+- if current_user == @user
+  = link_to 'Account Settings', account_settings_user_path(@user), class: 'btn pull-right'
+
+- if @user.first_name && @user.last_name
+  %p
+    %b Name:
+    = @user.name
+
 %p
   %b Email:
   = @user.email
 
-= link_to 'Edit', edit_user_path(@user)
+.tabbable
+  %ul.nav.nav-tabs
+    %li.active
+      %a(href='#user-bills-tab' data-toggle='tab')Bills
+    %li
+      %a(href='#user-chores-tab' data-toggle='tab') Chores
+    %li
+      %a(href='#user-events-tab' data-toggle='tab') Events
+    %li
+      %a(href='#user-shopping-lists-tab' data-toggle='tab') Shopping Lists
+    %li
+      %a(href='#user-posts-tab' data-toggle='tab') Posts
+  .tab-content
+    .tab-pane#user-bills-tab.active
+      - @bills.each do |bill|
+        = render 'bills/details', bill: bill
+    .tab-pane#user-chores-tab
+      - @chores.each do |chore|
+        %ul.chores
+          = render 'chores/details', chore: chore
+    .tab-pane#user-events-tab
+      - @events.each do |event|
+        = render 'events/details', event: event
+    .tab-pane#user-shopping-lists-tab
+      - @shopping_lists.each do |shopping_list|
+        = render 'shopping_lists/details', shopping_list: shopping_list
+    .tab-pane#user-posts-tab
+      - @posts.each do |post|
+        = render 'posts/details', post: post
+

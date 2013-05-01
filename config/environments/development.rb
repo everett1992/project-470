@@ -36,5 +36,10 @@ Roomie::Application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
+
+	# Eventually this will work work
+	# Disable logging of assets
+	#config.assets.logger = nil
+
 end

@@ -1,0 +1,19 @@
+.feed-post
+  %ul.media-list
+    %li.media
+      %a.pull-left(href="#")
+        %img.media-object(data-src="holder.js/64x64")
+      .media-body
+        %h4.media-heading
+          #{post.owner.name}
+          %small(style="float:right; margin-right:5px;")
+            #{distance_of_time_in_words_to_now post.created_at} ago
+            - if current_user == post.owner
+              = link_to [:edit, post] do
+                %i.icon-edit
+              = link_to(post, method: :delete) do
+                %i.icon-remove
+        = post.body
+        %h4
+          %small.comments.pull-right
+            = link_to pluralize(post.comments.count, "comment"), post

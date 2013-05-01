@@ -2,17 +2,7 @@
 
 
 - @shopping_lists.each do |shopping_list|
-  .shopping-list{:onclick=> "location.href='shopping_lists/#{shopping_list.id}'"}
-    .shopping-list-cover
-      .shopping-list-header
-        = shopping_list.title
-      .item-count
-        %h3= pluralize(shopping_list.shopping_list_items.count, 'item') + ''
-    
-  %br
-  %td= link_to 'Destroy', shopping_list, :method => :delete, :data => { :confirm => 'Are you sure?' }
-  %br
-  %br
+  = render 'details', shopping_list: shopping_list
 
 %br
 

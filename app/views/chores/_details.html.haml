@@ -1,0 +1,17 @@
+%li
+  %a#view-chore{:href => chore_url(chore)}
+  .chore-obligate
+    - if current_user == chore.owner
+      .delete-chore
+        %a=link_to 'X', chore, :method => :delete, :data => { :confirm => 'Are you sure?'}
+    = chore.assigned_user.name if chore.assigned_user
+  .chore-title
+    = chore.name
+  .chore-description
+    = chore.description
+  - if current_user == chore.owner
+    .edit-chore
+      = link_to [:edit, chore] do
+        %i.icon-edit
+  .chore-owner
+    = "- #{chore.owner.first_name or chore.owner.email}"

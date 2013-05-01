@@ -1,9 +1,10 @@
 # Fill in your AWS Access Key ID and Secret Access Key
 # http://aws.amazon.com/security-credentials
-development: &development
+production: &production
   access_key_id: <%= ENV['AMAZON_ACCESS_KEY_ID'] %>
   secret_access_key: <%= ENV['AMAZON_SECRET_ACCESS_KEY'] %>
+development:
+  #stub_requests: true # Do not make any network requests
+  <<: *production
 test:
-  <<: *development
-production:
-  <<: *development
+  <<: *production

@@ -1,9 +1,9 @@
-# Administrative controller for inviting roomates to 
+# Dwelling Owner controller for inviting roomates to
 # a delling.
-class DwellingInvitesController < ApplicationController
+class DwellingInvitesController < DwellingItemsController
   before_filter do |c|
     # Only dwelling owner has access.
-    c.dwelling_owner?(params[:dwelling_id].to_i) 
+    c.dwelling_owner?(params[:dwelling_id].to_i)
   end
 
   # List all invites belonging to this dwelling.
@@ -14,7 +14,7 @@ class DwellingInvitesController < ApplicationController
       format.html # index.html.haml
     end
   end
-  
+
   # Creates a form to create a invite to this dwelling.
   # GET /invites/new
   def new
@@ -28,8 +28,7 @@ class DwellingInvitesController < ApplicationController
   # Create a new invite to this dwelling.
   # POST /invites
   def create
-    params[:invite][:dwelling_id] = params[:dwelling_id]
-    @invite = Invite.new(params[:invite])
+    @invite = current_dwelling.invites.new(params[:invite])
     if @invite.save
       # Mail a link to join the dwelling to the invitee.
       InviteMailer.invite(@invite, invites_url(@invite.token)).deliver
@@ -40,7 +39,7 @@ class DwellingInvitesController < ApplicationController
         format.html { redirect_to dwelling_path(@invite.dwelling_id),
           notice: 'Invite was successfully created.' }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
       end
     end
   end

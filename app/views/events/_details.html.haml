@@ -1,15 +1,24 @@
-.event-container
-  %h4
-    = event.title
-    %small - #{event.date.strftime('%D')}
-  .event-details
-    %span.description
-      %pre= event.description
-    %span.poster
-      %p= event.user.name
-    .show-event-options
-      .contents
-        = link_to 'Show', event_path(event), class: 'btn btn-success btn-small'
-        = link_to 'Edit', edit_event_path(event), class: 'btn btn-warning btn-small'
-        = link_to 'Destroy', event_path(event), :method => :delete, :data => { :confirm => 'Are you sure?' }, class: 'btn btn-danger btn-small'
-%br
+.feed-post
+  %ul.media-list
+    %li.media
+      %a.pull-left(href="#")
+        %img.media-object(data-src="holder.js/64x64")
+      .media-body
+        .media-heading
+          #{event.owner.name}
+        %h4.media-heading
+          #{event.name}
+          %small(style="float:right; margin-right:5px;")
+            - if event.date < Time.now
+              started #{distance_of_time_in_words_to_now event.date} ago
+            - else
+              in #{distance_of_time_in_words_to_now event.date}
+            - if current_user == event.owner
+              = link_to [:edit, event] do
+                %i.icon-edit
+              = link_to(event, method: :delete) do
+                %i.icon-remove
+        = event.description
+        %h4
+          %small.comments.pull-right
+            = link_to pluralize(event.comments.count, "comment"), event

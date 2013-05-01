@@ -1,0 +1,41 @@
+- content_for :sidebar do
+  .left-rail-container
+    %ul.nav.nav-list
+      .nav-header-container{style: 'text-align: center;'}
+        %img(data-src="holder.js/80x80" style="position: relative; padding: 5px 0; display: inline-block")
+        .user-info
+          %h5
+            Some kind of user profile display
+  .left-rail-container
+    %ul.nav.nav-list
+      = render 'dashboard/rail_container',
+        header: "Roomies",
+        header_link: current_dwelling,
+        collection: @roommates
+
+      = render 'dashboard/rail_container',
+        header: "Bills",
+        header_link: bills_path,
+        collection: @upcoming_bills,
+        date_method: :date_due
+
+      = render 'dashboard/rail_container',
+        header: "Events",
+        header_link: events_path,
+        collection: @upcoming_events,
+        date_method: :date
+
+      = render 'dashboard/rail_container',
+        header: "Lists",
+        header_link: shopping_lists_path,
+        collection: @shopping_lists
+
+      = render 'dashboard/rail_container',
+        header: "Chores",
+        header_link: chores_path,
+        collection: @upcoming_chores
+
+- content_for :content do
+  = yield
+
+= render :template => 'layouts/application'

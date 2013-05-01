@@ -1,0 +1,10 @@
+.feed-post
+  %ul.media-list
+    %li.media
+      .media-body
+        %h4
+          %small(style="float:right; margin-right:5px;")
+            #{distance_of_time_in_words_to_now notification.created_at} ago
+        = notification.owner.name
+        = notification.body
+        = link_to notification.dwelling_item.class, notification.dwelling_item

@@ -1,25 +1,11 @@
-%h1 Listing chores
+%h1 DONT BE LAZY!
 
-%table
-  %tr
-    %th Name
-    %th Description
-    %th Assigned user
-    %th Dwelling
-    %th
-    %th
-    %th
-
-  - @chores.each do |chore|
-    %tr
-      %td= chore.name
-      %td= chore.description
-      %td= chore.assigned_user_id
-      %td= chore.dwelling_id
-      %td= link_to 'Show', chore
-      %td= link_to 'Edit', edit_chore_path(chore)
-      %td= link_to 'Destroy', chore, :method => :delete, :data => { :confirm => 'Are you sure?' }
 
 %br
+
+%ul.chores
+  - @chores.each do |chore|
+    = render 'chores/details', chore: chore
+
 
 = link_to 'New Chore', new_chore_path

@@ -1,0 +1,3 @@
+- dwelling_item.comments.each do |comment|
+  = render 'comments/details', comment: comment
+= render 'comments/form', dwelling_item: dwelling_item, comment: dwelling_item.comments.build

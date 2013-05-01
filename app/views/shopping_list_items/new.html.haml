@@ -1,6 +1,6 @@
-%h1 
-  ='Add an item to ' + ShoppingList.find(params[:shopping_list_id]).title
+%h1
+  Add an item to #{@shopping_list.name}
 
 = render 'form'
 
-= link_to 'Cancel', shopping_list_path(:id => params[:shopping_list_id])
+= link_to 'Cancel', shopping_list_path(@shopping_list)

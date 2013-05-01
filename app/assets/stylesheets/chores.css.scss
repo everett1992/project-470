@@ -1,3 +1,166 @@
 // Place all the styles related to the Chores controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+ul.chores{ 
+	list-style:none; 
+}
+
+ul.chores li{
+	width:250px;
+	height:100%;
+	margin:40px;
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	-moz-box-shadow:5px 5px 7px rgba(33,33,33,1);
+  -webkit-box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  box-shadow: 5px 5px 7px rgba(33,33,33,.7);
+  -webkit-transform:rotate(-6deg);
+  -o-transform:rotate(-6deg);
+  -moz-transform:rotate(-6deg);
+}
+
+
+
+#view-chore{
+	position: absolute;
+	margin: 0px; 
+	display: block; 
+	width: 100%; 
+	height: 100%;
+}
+
+
+ul.chores li{
+	background-color: #FEFDFD;
+	padding: 0;
+  -webkit-transition: all 300ms ease-in 50ms;
+  -moz-transition: all 300ms ease-in 50ms;
+  -o-transition: all 300ms ease-in 50ms;
+  transition: all 300ms ease-in 50ms;
+	.chore-obligate{
+		background-color: #F7F7F7;
+		width: 100%;
+		display: inline-block;
+		line-height: 40px;
+		font-size: 25px;
+		font-weight: bold;
+
+		a{
+	  	color: #999999;
+	  }
+
+	  a:hover{
+	  	text-decoration: none;
+	  	color: #555555;
+	  }
+	  
+	  .delete-chore{
+	  	opacity: 0;
+	  	position: absolute;
+	  	right: 10px;
+  	  -webkit-transition: opacity 300ms ease-in 50ms;
+		  -moz-transition: opacity 300ms ease-in 50ms;
+		  -o-transition: opacity 300ms ease-in 50ms;
+		  transition: opacity 300ms ease-in 50ms;
+	  }
+
+	}
+
+	.edit-chore{
+  	opacity: 0;
+  	position: absolute;
+  	left: 10px;
+  	z-index: 10;
+	  -webkit-transition: opacity 300ms ease-in 50ms;
+	  -moz-transition: opacity 300ms ease-in 50ms;
+	  -o-transition: opacity 300ms ease-in 50ms;
+	  transition: opacity 300ms ease-in 50ms;
+  }
+
+  .edit-chore i:hover{
+  	text-decoration: none;
+  }
+
+
+
+	.chore-title{
+		width: 100%;
+		display: inline-block;
+		line-height: 30px;
+		font-size: 20px;
+	}
+	.chore-description{
+		width: 100%;
+		color: #777;
+		display: inline-block;
+		line-height: 20px;
+		font-size: 15px;
+		width: 95%;
+		margin-bottom: 10px;
+	}
+
+	.chore-owner{
+		width: 100%;
+		color: #777;
+		text-align: right;
+		display: inline-block;
+		line-height: 20px;
+		font-size: 15px;
+		width: 100%;
+		position: relative;
+		right: 10px;
+		margin-bottom: 10px;
+	}
+
+}
+
+ul.chores li:nth-child(odd){
+  -o-transform:rotate(4deg);
+  -webkit-transform:rotate(4deg);
+  -moz-transform:rotate(4deg);
+  position:relative;
+  top:5px;
+}
+ul.chores li:nth-child(2n){
+  -o-transform:rotate(-3deg);
+  -webkit-transform:rotate(-3deg);
+  -moz-transform:rotate(-3deg);
+  position:relative;
+  top:-5px;
+}
+ul.chores li:nth-child(6n){
+  -o-transform:rotate(5deg);
+  -webkit-transform:rotate(5deg);
+  -moz-transform:rotate(5deg);
+  position:relative;
+  top:-10px;
+}
+
+ul.chores li:hover{
+  -webkit-transform: scale(1.5);
+  -moz-transform: scale(1.5);
+  -o-transform: scale(1.5);
+  position:relative;
+  z-index:10;
+  -moz-box-shadow:0px 3px 7px rgba(0,0,0,.7);
+  -webkit-box-shadow: 0px 3px 7px rgba(0,0,0,.7);
+  box-shadow:0px 3px 7px rgba(0,0,0,.7);
+  -webkit-transition: all 300ms ease-in 50ms;
+  -moz-transition: all 300ms ease-in 50ms;
+  -o-transition: all 300ms ease-in 50ms;
+  transition: all 300ms ease-in 50ms;
+  cursor:pointer;
+
+  .delete-chore{
+		opacity: 1;
+	}
+
+	.edit-chore{
+		opacity: 1;
+	}
+}
+
+

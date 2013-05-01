@@ -1,12 +1,14 @@
-.body-container
-  %h1 Listing events
-  %ul.nav.nav-pills
-    %li{class: !params[:past] ? :active : nil}
-      = link_to :upcoming, events_path
-    %li{class: params[:past] ? :active : nil}
-      = link_to :past, events_path(past: false)
-  - @events.each do |event|
-    = render 'events/details', event: event
+.feed-container
+  .inner-body
+    .feed-info-container
+      %h1 Listing events
+      .new-event
+        = link_to 'New Event', new_event_path, class: 'btn btn-block btn-inverse'
+      %ul.nav.nav-tabs
+        %li{class: !params[:past] ? :active : nil}
+          = link_to :upcoming, events_path
+        %li{class: params[:past] ? :active : nil}
+          = link_to :past, events_path(past: false)
+      - @events.each do |event|
+        = render 'events/details', event: event
 
-  .new-event
-    = link_to 'New Event', new_event_path
