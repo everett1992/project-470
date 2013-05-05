@@ -50,6 +50,14 @@ class UserSettingsController < ApplicationController
 		end
 	end
 
+  def edit_avatar
+		@user = User.find(params[:id])
+
+    s3 = AWS::S3.new
+    @form = s3.buckets[PROFILE_BUCKET].presigned_post(key: @user.avatar_key)
+    
+  end
+
   private
 
     def is_self?

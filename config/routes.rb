@@ -54,6 +54,7 @@ Roomie::Application.routes.draw do
 				get "settings/#{type}" => "user_settings#edit_#{type}", as: "#{type}_settings"
 				put "settings/#{type}" => "user_settings#update_#{type}"
 			end
+      get "settings/avatar" => "user_settings#edit_avatar", as: "avatar_settings"
 		end
 	end
 

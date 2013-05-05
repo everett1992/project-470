@@ -2,7 +2,7 @@
   %ul.media-list
     %li.media
       %a.pull-left(href="#")
-        %img.media-object(data-src="holder.js/64x64")
+        = avatar_image_tag comment.owner, size: '64x64'
       .media-body
         %h4.media-heading
           #{comment.owner.name}

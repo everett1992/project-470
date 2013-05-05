@@ -3,10 +3,7 @@
   .left-rail-container
     %ul.nav.nav-list
       .nav-header-container{style: 'text-align: center;'}
-        %img(data-src="holder.js/80x80" style="position: relative; padding: 5px 0; display: inline-block")
-        .user-info
-          %h5
-            Some kind of user profile display
+        = avatar_image_tag current_user, size: '80x80'
   .left-rail-container
     %ul.nav.nav-list
       = render 'dashboard/rail_container',

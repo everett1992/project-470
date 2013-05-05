@@ -1,0 +1,9 @@
+/= form_tag @form.url.to_s, enctype: "multipart/form-data" do
+<form action=#{@form.url.to_s} enctype='multipart/form-data' method='POST'>
+- @form.fields.each do |name, value|
+  = hidden_field_tag name, value
+= file_field_tag :file 
+= submit_tag 'Upload', class: 'btn'
+</form>
+
+= image_tag @user.avatar_url

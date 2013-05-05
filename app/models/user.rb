@@ -59,4 +59,25 @@ class User < ActiveRecord::Base
 		end
 		return subscriptions
 	end
+
+  def avatar_url?
+    s3 = AWS::S3.new
+    image = s3.buckets[PROFILE_BUCKET].objects[self.avatar_key]
+    return image.exists?
+  end
+
+  def avatar_url
+    s3 = AWS::S3.new
+    image = s3.buckets[PROFILE_BUCKET].objects[self.avatar_key]
+    if image.exists?
+      return image.url_for(:read)
+    else
+      return nil
+    end
+  end
+
+  # change this to a hash of the user's email or something
+  def avatar_key
+    return "#{self.id}_#{self.created_at.to_i}"
+  end
 end
