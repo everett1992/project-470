@@ -10,7 +10,7 @@ gem 'mysql2', group: :production
 gem 'aws-sdk'
 
 
-gem 'twitter-bootstrap-rails' 
+gem 'twitter-bootstrap-rails'
 gem 'haml'
 
 # Gems used only for assets and not required
@@ -51,6 +51,8 @@ gem 'passenger', :git => 'git@github.com:FooBarWidget/passenger.git'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-
 # To use debugger
 # gem 'debugger'
+
+# For programmatically adding to the crontab
+gem 'cronedit'

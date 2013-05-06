@@ -1,0 +1,15 @@
+%tr
+  %td
+    = endpoint
+  %td
+    - if subscription
+      - if subscription.arn == 'PendingConfirmation'
+        Pending Confirmation
+      - else
+        = form_tag notifications_settings_user_path, method: :put do
+          = hidden_field_tag :arn, subscription.arn
+          = hidden_field_tag :endpoint, endpoint
+          = hidden_field_tag :unsubscribe, true
+          = button_tag 'Unsubscribe', class: 'btn btn-danger'
+    - else
+      = button_to 'Subscribe', notifications_settings_user_path(endpoint: endpoint), method: :put, class: 'btn'

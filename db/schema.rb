@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130408224959) do
+ActiveRecord::Schema.define(:version => 20130505203008) do
 
   create_table "bill_payments", :force => true do |t|
     t.integer  "user_id"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(:version => 20130408224959) do
     t.integer  "dwelling_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "owner_id"
   end
 
   add_index "bills", ["date_due"], :name => "index_bills_on_date_due"
@@ -46,7 +47,13 @@ ActiveRecord::Schema.define(:version => 20130408224959) do
     t.integer  "dwelling_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "owner_id"
+    t.boolean  "active"
+    t.string   "cron_str"
   end
+
+  add_index "chores", ["assigned_user_id"], :name => "index_chores_on_assigned_user_id"
+  add_index "chores", ["dwelling_id"], :name => "index_chores_on_dwelling_id"
 
   create_table "dwellings", :force => true do |t|
     t.string   "name"
@@ -54,14 +61,15 @@ ActiveRecord::Schema.define(:version => 20130408224959) do
     t.datetime "updated_at",                    :null => false
     t.integer  "owner_id"
     t.string   "time_zone",  :default => "UTC"
+    t.string   "topic_arn"
   end
 
   add_index "dwellings", ["owner_id"], :name => "index_dwellings_on_owner_id"
 
   create_table "events", :force => true do |t|
     t.integer  "dwelling_id"
-    t.integer  "user_id"
-    t.string   "title"
+    t.integer  "owner_id"
+    t.string   "name"
     t.text     "description"
     t.datetime "date"
     t.datetime "created_at",  :null => false
@@ -70,7 +78,7 @@ ActiveRecord::Schema.define(:version => 20130408224959) do
 
   add_index "events", ["date"], :name => "index_events_on_date"
   add_index "events", ["dwelling_id"], :name => "index_events_on_dwelling_id"
-  add_index "events", ["user_id"], :name => "index_events_on_user_id"
+  add_index "events", ["owner_id"], :name => "index_events_on_user_id"
 
   create_table "invites", :force => true do |t|
     t.string   "token"
@@ -85,12 +93,18 @@ ActiveRecord::Schema.define(:version => 20130408224959) do
 
   create_table "messages", :force => true do |t|
     t.string   "body"
-    t.date     "date"
     t.integer  "dwelling_id"
-    t.integer  "user_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.integer  "owner_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.string   "type"
+    t.integer  "dwelling_item_id"
+    t.string   "dwelling_item_type"
   end
+
+  add_index "messages", ["dwelling_id"], :name => "index_messages_on_dwelling_id"
+  add_index "messages", ["dwelling_item_id"], :name => "index_messages_on_dwelling_item_id"
+  add_index "messages", ["dwelling_item_type"], :name => "index_messages_on_dwelling_item_type"
 
   create_table "shopping_list_items", :force => true do |t|
     t.string   "name"
@@ -101,23 +115,31 @@ ActiveRecord::Schema.define(:version => 20130408224959) do
     t.integer  "shopping_list_id"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
+    t.integer  "owner_id"
   end
 
+  add_index "shopping_list_items", ["shopping_list_id"], :name => "index_shopping_list_items_on_shopping_list_id"
+
   create_table "shopping_lists", :force => true do |t|
-    t.string   "title"
+    t.string   "name"
     t.integer  "dwelling_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.integer  "owner_id"
   end
+
+  add_index "shopping_lists", ["dwelling_id"], :name => "index_shopping_lists_on_dwelling_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.string   "email"
     t.string   "password_digest"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
     t.integer  "dwelling_id"
+    t.string   "cellphone"
+    t.string   "picture_filename"
   end
 
   add_index "users", ["dwelling_id"], :name => "index_users_on_dwelling_id"

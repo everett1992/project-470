@@ -1,0 +1,9 @@
+%p
+  Subscribe to receive notification about things happening at your dwelling.
+
+%table.table.table-condensed
+  %thead
+    %td Endpoint
+    %td 
+  - @subscriptions.each_pair do |endpoint, subscription|
+    = render 'user_settings/subscriptions', endpoint: endpoint, subscription: subscription

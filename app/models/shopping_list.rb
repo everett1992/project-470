@@ -1,7 +1,10 @@
-class ShoppingList < ActiveRecord::Base
-  belongs_to :dwelling
-  belongs_to :user
+class ShoppingList < DwellingItem
+	# Accessible Attributes
+  attr_accessible :dwelling_id, :name
+
+	# Relations
   has_many :shopping_list_items
-  validates :title, :presence => true
-  attr_accessible :dwelling_id, :title
+
+	# Validations
+  validates :name, :presence => true
 end

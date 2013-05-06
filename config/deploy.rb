@@ -1,6 +1,18 @@
 require 'bundler/capistrano'
 require 'rvm/capistrano'
 
+before 'deploy:setup', 'rvm:install_rvm'
+#after 'rvm:install_rvm', 'rvm:enable_auto_libs'
+before 'deploy:setup', 'rvm:install_ruby'
+
+namespace :rvm do
+	task :enable_auto_libs do
+		run 'rvm autolibs enable'
+	end
+end
+
+set :rvm_ruby_string, 'ruby-2.0.0-p0'
+
 set :application, "roomie"
 set :deploy_to, "/home/ubuntu/#{application}"
 
@@ -40,7 +52,7 @@ namespace :deploy do
   task :start do
 		run("#{startcmd}")
 	end
-  task :stop do 
+  task :stop do
 		run("#{stopcmd}")
  	end
   task :restart, :roles => :app, :except => { :no_release => true } do

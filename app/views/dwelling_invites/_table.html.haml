@@ -1,10 +1,12 @@
-%table.table
+%table.table.table-condensed
   %thead
     %td Email Adress
-    %td Invite Url
+    %td 
 
-  - for invite in @invites
-    %tr
-      %td= invite.email
-      %td= invites_url(invite.token)
-      %td= link_to 'Destroy', [invite.dwelling, invite], method: :delete, data: { confirm: 'Are you sure?' }
+  - if @invites.any?
+    - for invite in @invites
+      %tr
+        %td= invite.email
+        %td= link_to 'Delete', [invite.dwelling, invite], method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger'
+  - else
+    %td No Invites

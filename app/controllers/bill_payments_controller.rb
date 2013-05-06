@@ -49,13 +49,13 @@ class BillPaymentsController < ApplicationController
     @bill_payment = BillPayment.new(params[:bill_payment])
     @bill_payment.bill = @bill
     @bill_payment.user = @user
-    
+
     respond_to do |format|
       if @bill_payment.save
         format.html { redirect_to bill_path(@bill), notice: 'Payment transaction was successfull.' }
         format.json { render json: @bill_payment, status: :created, location: @bill_payment }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
         format.json { render json: @bill_payment.errors, status: :unprocessable_entity }
       end
     end
@@ -69,7 +69,7 @@ class BillPaymentsController < ApplicationController
         format.html { redirect_to bill_path(@bill), notice: 'Bill Payment was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json { render json: @bill_payment.errors, status: :unprocessable_entity }
       end
     end

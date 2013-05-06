@@ -1,5 +1,9 @@
 # Administration controller for dwelling owner
 class DwellingsController < ApplicationController
+
+	layout Proc.new { |controller| current_dwelling ? 'dwelling_layout' : 'application' }
+	before_filter :load_upcoming_items, if: :current_dwelling
+
   before_filter :logged_in?
   before_filter :except => [:new, :create] do |c|
     c.dwelling_member?(params[:id].to_i)
@@ -37,16 +41,13 @@ class DwellingsController < ApplicationController
   def create
     params[:dwelling][:owner] = current_user
     @dwelling = Dwelling.new(params[:dwelling])
-    if @dwelling.save
-      current_user.dwelling = @dwelling
-      current_user.save
-    end
+		@dwelling.users << current_user
     respond_to do |format|
-      if @dwelling.valid?
+      if @dwelling.save
         format.html { redirect_to root_path,
           notice: 'Dwelling was successfully created.' }
       else
-        format.html { render action: "new" }
+        format.html { render :new }
       end
     end
   end
@@ -60,7 +61,7 @@ class DwellingsController < ApplicationController
         format.html { redirect_to @dwelling,
           notice: 'Dwelling was successfully updated.' }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
       end
     end
   end

@@ -1,0 +1,17 @@
+- content_for :sidebar do
+  .left-rail-container
+    %ul.nav.nav-list
+      %li.nav-header
+        User Settings
+      %li{class: current_page?(account_settings_user_path) ? 'active' : nil}
+        = link_to 'Account', account_settings_user_path
+      %li{class: current_page?(profile_settings_user_path) ? 'active' : nil}
+        = link_to 'Profile', profile_settings_user_path
+      %li{class: current_page?(picture_settings_user_path) ? 'active' : nil}
+        = link_to 'Picture', picture_settings_user_path
+      %li{class: current_page?(notifications_settings_user_path) ? 'active' : nil}
+        = link_to 'Notifications', notifications_settings_user_path
+- content_for :content do
+  = yield
+
+= render :template => 'layouts/application'

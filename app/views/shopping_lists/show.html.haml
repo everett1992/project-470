@@ -1,20 +1,17 @@
-%p#notice= notice
-
-
 
 .shopping-list
   .shopping-list-header
-    = @shopping_list.title
+    = @shopping_list.name
     = link_to '+', new_shopping_list_shopping_list_item_path(shopping_list_id: @shopping_list.id), class: 'add-item-btn'
   .modified-date-container
-    %span.modified-at-days-ago 
+    %span.modified-at-days-ago
       = daysAgo = time_ago_in_words(@shopping_list.updated_at) + ' ago'
-    %span.modified-at-time 
+    %span.modified-at-time
       = @shopping_list.updated_at.strftime('%B %e')	
     %span.modified-at-day
       = @shopping_list.updated_at.strftime('%l:%M%p')	
   - @shopping_list.shopping_list_items.each do |item|
-    %li 
+    %li
       = link_to item.name, edit_shopping_list_shopping_list_item_path(item, :shopping_list_id => @shopping_list.id)
       %small
       - if item.quantity
@@ -26,6 +23,14 @@
 %br
 %br
 
-= link_to 'Change title', edit_shopping_list_path(@shopping_list)
+  .body-container
+    .feed-container
+      .inner-body
+        .feed-info-container  
+          %br
+          = render 'comments/all', dwelling_item: @shopping_list
+
+
+= link_to 'Change Name', edit_shopping_list_path(@shopping_list)
 \|
 = link_to 'Back to lists', shopping_lists_path

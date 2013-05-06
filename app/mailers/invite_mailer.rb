@@ -1,4 +1,5 @@
 class InviteMailer < ActionMailer::Base
+	# TODO: change this to an app email address, something other than mine
   default from: "everett.caleb@gmail.com"
 
   def invite(invite, join_url)

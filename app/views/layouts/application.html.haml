@@ -26,32 +26,60 @@
             %span.icon-bar
             %span.icon-bar
           %a.brand(href=root_path)= current_dwelling ? current_dwelling.name : "Roomie"
-          .container.nav-collapse
+          .collapse.nav-collapse
             - if current_dwelling
               %ul.nav
-                %li= link_to "Bills", bills_path
-                %li= link_to "Chores", chores_path
-                %li= link_to "Events", events_path
-                %li= link_to "Lists", shopping_lists_path
-                %li= link_to "Messages", messages_path
+                %li.divider-vertical
+                %li{class: current_page?(bills_path) ? :active : nil}
+                  = link_to "Bills", bills_path
+                %li{class: current_page?(chores_path) ? :active : nil}
+                  = link_to "Chores", chores_path
+                %li{class: current_page?(events_path) ? :active : nil}
+                  = link_to "Events", events_path
+                %li{class: current_page?(shopping_lists_path) ? :active : nil}
+                  = link_to "Lists", shopping_lists_path
+                %li{class: current_page?(posts_path) ? :active : nil}
+                  = link_to "Posts", posts_path
             %ul.nav.pull-right
+              %li.divider-vertical
               - if current_user
-                %li= link_to "Log out", logout_path
-                %li= link_to current_user.name, user_path(current_user)
+                %li
+                  = link_to current_user.name, user_path(current_user)
+                %li(data-toggle='tooltip' data-original-title='Account Settings')
+                  = link_to account_settings_user_path(current_user) do
+                    %span.hidden-desktop
+                      Account Settings
+                    %i.icon-wrench
+                %li(data-toggle='tooltip' data-original-title='Logout')
+                  = link_to logout_path do
+                    %span.hidden-desktop
+                      Logout
+                    %i.icon-lock
+
               - else
                 %li
                   %a(href="#myModal" data-toggle="modal")
                     Sign In
     .container
       .row
-        = bootstrap_flash
+        .span12
+          = bootstrap_flash
         - unless current_user
           #myModal.modal.hide.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
             .modal-body
               = render :partial => "sessions/login"
-        = yield
-      /%footer
-      /  %p &copy; Company 2013
+        - if content_for?(:sidebar)
+          / sidebar
+          .span4
+            = yield(:sidebar)
+            / content
+          .span8
+            = yield(:content)
+        - else
+          /
+            content
+          .span12
+            = yield
     /
       Javascripts
       \==================================================

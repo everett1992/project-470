@@ -1,14 +1,15 @@
-  class EventsController < ApplicationController
+class EventsController < DwellingItemsController
   before_filter :get_dwelling_and_event
+	before_filter :ensure_event_belongs_to_current_user, only: [:edit, :update, :destroy]
 
 
   # GET /events
   # GET /events.json
   def index
 		if params[:past]
-			@events = @dwelling.events.order('date DESC').where(['date < ?', Date.today()])
+			@events = @dwelling.events.upcoming
 		else
-			@events = @dwelling.events.order(:date).where(['date >= ?', Date.today()])
+			@events = @dwelling.events.past
 		end
 
     respond_to do |format|
@@ -46,14 +47,14 @@
   # POST /events.json
   def create
     @event = @dwelling.events.build(params[:event])
-    @event.user = current_user
+    @event.owner = current_user
 
     respond_to do |format|
       if @event.save
         format.html { redirect_to event_path(@event), notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
       else
-        format.html { render action: "new" }
+        format.html { render :new}
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -67,7 +68,7 @@
         format.html { redirect_to event_path(@event), notice: 'Event was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :edit }
         format.json { render json: @event.errors, status: :unprocessable_entity }
       end
     end
@@ -92,4 +93,8 @@
       @event = @dwelling.events.find(params[:id])
     end
   end
+
+	def ensure_event_belongs_to_current_user
+		permission_denied unless current_user == @event.owner
+	end
 end

@@ -1,10 +1,14 @@
-class Chore < ActiveRecord::Base
-  attr_accessible :assigned_user_id, :description, :dwelling_id, :name
+class Chore < DwellingItem
+	# Accessible Attributes
+  attr_accessible :assigned_user_id, :description, :dwelling_id, :name, :active, :cron_str
 
-  belongs_to :dwelling
+	# Relations
   belongs_to :assigned_user, :class_name => 'User'
 
-  #validates :assigned_user_id, :presence => true
-  validates :dwelling_id, :presence => true
+	# Validations
   validates :name, :length => {:minimum => 1}
+
+  # Scope
+  scope :active, where(:active => true)
+  scope :inactive, where(:active => false)
 end
