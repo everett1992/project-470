@@ -1,11 +1,29 @@
-%h1 DONT BE LAZY!
+/ %h1 DONT BE LAZY!
 
 
-%br
+/ %br
 
-%ul.chores
-  - @chores.each do |chore|
-    = render 'chores/details', chore: chore
+/ %ul.chores
+/ 	- @chores.active.each do |chore|
+/ 		= render 'chores/details', chore: chore
 
 
-= link_to 'New Chore', new_chore_path
+/ = link_to 'New Chore', new_chore_path
+
+
+.feed-container
+	.inner-body
+		.feed-info-container
+			%h1 Chores
+			.new-event
+				= link_to 'New Chore', new_chore_path, class: 'btn btn-block btn-inverse'
+			%ul.nav.nav-tabs
+				%li{class: !params[:inactive] ? :active : nil}
+					= link_to :active, chores_path
+				%li{class: params[:inactive] ? :active : nil}
+					= link_to :inactive, chores_path(inactive: true)
+			/ - @chores.each do |chore|
+			/ 	= render 'chores/details', chore: chore
+			%ul.chores
+				- @chores.each do |chore|
+					= render 'chores/details', chore: chore

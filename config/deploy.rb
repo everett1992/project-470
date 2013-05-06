@@ -34,8 +34,6 @@ server '54.235.87.183', # Everett's ec2 server
  	:web,
  	:db,
  	:primary => true
-server '54.225.104.65',
-  :app, :web
 
 # if you want to clean up old releases on each deploy uncomment this:
 set :keep_releases, 2

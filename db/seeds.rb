@@ -54,10 +54,11 @@ def create_shopping_list(name, items, dwelling)
 	return shopping_list
 end
 
-def create_chore(name, dwelling)
+def create_chore(name, dwelling, active)
 	chore = dwelling.chores.build(
 		name: name,
-		description: Faker::Lorem.sentences(3).join
+		description: Faker::Lorem.sentences(3).join,
+		active: active
 	)
 	chore.owner = dwelling.users.all[Random.rand(dwelling.users.size)]
 	chore.assigned_user = dwelling.users.all[Random.rand(dwelling.users.size)]
@@ -118,18 +119,19 @@ end
 		create_event(name, i < 2, dwelling)
   end
 
-  #Create 2 messages by random users
-  2.times do |i|
-		create_message(dwelling)
-  end
-
 	# Create a shopping list 
 	create_shopping_list('Groceries', ['Eggs', 'Bread', 'Milk'], dwelling)
 
 	# Create 3 chores
-	['Take out the Trash', 'Do the Dishes', 'Clean the Bathroom'].each do |chore_name|
-		create_chore(chore_name, dwelling)
+	# ['Take out the Trash', 'Do the Dishes', 'Clean the Bathroom'].each do |chore_name|
+	4.times.map { Faker::Lorem.words(2).join(' ') }.each_with_index do |chore_name, i|
+		create_chore(chore_name, dwelling, i < 3)
 	end
+
+  #Create 2 messages by random users
+  2.times do |i|
+		create_message(dwelling)
+  end
 end
 
 puts "Created #{User.count} Users"

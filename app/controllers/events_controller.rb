@@ -1,4 +1,4 @@
-  class EventsController < DwellingItemsController
+class EventsController < DwellingItemsController
   before_filter :get_dwelling_and_event
 	before_filter :ensure_event_belongs_to_current_user, only: [:edit, :update, :destroy]
 
@@ -7,9 +7,9 @@
   # GET /events.json
   def index
 		if params[:past]
-			@events = @dwelling.events.order('date DESC').where(['date < ?', Date.today()])
+			@events = @dwelling.events.upcoming
 		else
-			@events = @dwelling.events.order(:date).where(['date >= ?', Date.today()])
+			@events = @dwelling.events.past
 		end
 
     respond_to do |format|

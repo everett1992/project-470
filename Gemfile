@@ -51,6 +51,8 @@ gem 'passenger', :git => 'git@github.com:FooBarWidget/passenger.git'
 # Use unicorn as the app server
 # gem 'unicorn'
 
-
 # To use debugger
 # gem 'debugger'
+
+# For programmatically adding to the crontab
+gem 'cronedit'

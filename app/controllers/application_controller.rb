@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   end
 
   # Returns the user set in the session
-	def current_user
+  def current_user
     if session[:user_id]
       @current_user ||= User.find_by_id(session[:user_id])
     end
@@ -74,11 +74,10 @@ class ApplicationController < ActionController::Base
 	# Load important, upcoming items
 	def load_upcoming_items
 		@roommates = current_dwelling.users
-		@shopping_lists = current_dwelling.shopping_lists
-
-		@upcoming_bills = current_dwelling.bills.upcoming
-		@upcoming_events = current_dwelling.events.upcoming
-		@upcoming_chores = current_dwelling.chores
+		@shopping_lists = current_dwelling.shopping_lists.limit(4)
+		@upcoming_bills = current_dwelling.bills.upcoming.limit(4)
+		@upcoming_events = current_dwelling.events.upcoming.limit(4)
+		@upcoming_chores = current_dwelling.chores.limit(4)
 	end
 
   # Helper methods are accessable to views

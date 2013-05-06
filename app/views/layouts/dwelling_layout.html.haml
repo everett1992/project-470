@@ -1,11 +1,12 @@
+-# The method `application_controller#load_upcoming_items`  should be ran before this layout.
 - content_for :sidebar do
   .left-rail-container
     %ul.nav.nav-list
       .nav-header-container{style: 'text-align: center;'}
-        %img(data-src="holder.js/80x80" style="position: relative; padding: 5px 0; display: inline-block")
+        =profile_picture_tag(current_user, :size => "80x80")
         .user-info
           %h5
-            Some kind of user profile display
+            = current_user.name
   .left-rail-container
     %ul.nav.nav-list
       = render 'dashboard/rail_container',

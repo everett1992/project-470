@@ -69,15 +69,17 @@
             .modal-body
               = render :partial => "sessions/login"
         - if content_for?(:sidebar)
+          / sidebar
           .span4
             = yield(:sidebar)
+            / content
           .span8
             = yield(:content)
         - else
+          /
+            content
           .span12
             = yield
-      /%footer
-      /  %p &copy; Company 2013
     /
       Javascripts
       \==================================================

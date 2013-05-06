@@ -1,0 +1,15 @@
+= form_for @user, :url => picture_settings_user_path(@user), :html => {:multipart => true, :accept => "image/gif,image/png,image/jpg"} do |f|
+  - if @user.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@user.errors.count, "error")} prohibited this user from being saved:"
+      %ul
+        - @user.errors.full_messages.each do |msg|
+          %li= msg
+  %h5 Current Picture
+  =profile_picture_tag(current_user)
+  %h5 Upload a New Photo
+  .field
+    = f.file_field :upload
+  .actions
+    = f.submit 'Save'
+

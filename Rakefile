@@ -58,6 +58,15 @@ namespace :db do
 	desc "Delete SNS Topics"
 	task :drop => :delete_topics
 end
+
+namespace :chores do
+	desc "Reactivates a chore, given a CHORE_ID"
+	task :activate_chore => :environment do
+		chore = Chore.find_by_id(ENV['CHORE_ID'])
+		unless chore.active
+			chore.update_attribute(:active, true)
+		end
+	end
+end
+
 Roomie::Application.load_tasks
-
-

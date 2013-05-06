@@ -3,7 +3,7 @@ class Bill < DwellingItem
   attr_accessible :amount, :date_due, :name, :owed_to, :status, :dwelling_id
 
 	# Scopes
-	scope :upcoming, order(:date_due).where(['date_due >= ?', Date.today]).limit(4)
+	scope :upcoming, order(:date_due).where(['date_due >= ?', Date.today])
 
 	# Relations
   has_many :bill_payments

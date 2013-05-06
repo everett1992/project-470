@@ -11,5 +11,6 @@ class Event < DwellingItem
 	# Scopes
 
 	# get the four next events
-	scope :upcoming, order(:date).where(['date >= ?', Date.today]).limit(4)
+	scope :upcoming, order(:date).where(['date >= ?', Date.today])
+	scope :past, order('date DESC').where(['date < ?', Date.today()])
 end

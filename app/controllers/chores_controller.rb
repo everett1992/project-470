@@ -5,7 +5,11 @@ class ChoresController < DwellingItemsController
   # GET /chores
   # GET /chores.json
   def index
-    @chores = @dwelling.chores
+    if params[:inactive]
+      @chores = @dwelling.chores.inactive
+    else
+      @chores = @dwelling.chores.active
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -42,9 +46,32 @@ class ChoresController < DwellingItemsController
   def create
     @chore = @dwelling.chores.build(params[:chore])
     @chore.owner = current_user
+    @chore.active = true
+
+    # Make the actual cron-format string
+    cron_cmd = "/bin/bash -l -c 'cd #{Rails.root} && bundle exec rake chores:activate_chore CHORE_ID="
+    case @chore.cron_str
+    when "Every M/W/F"
+      @chore.cron_str = "0 0 * * MON,WED,FRI #{cron_cmd}"
+    when "Every T/Th"
+      @chore.cron_str = "0 0 * * TUE,THU #{cron_cmd}"
+    when "Every Sunday"
+      @chore.cron_str = "0 0 * * SUN #{cron_cmd}"
+    else
+      @chore.cron_str = nil
+    end
+
+    # if @chore.cron_str
+    #   puts @chore.cron_str
+    #   puts (CronEdit::Crontab.Add "chore_#{params[:id]}", @chore.cron_str)
+    # end
 
     respond_to do |format|
       if @chore.save
+        if @chore.cron_str
+          puts @chore.cron_str
+          puts (CronEdit::Crontab.Add "chore_#{@chore.id}", "#{@chore.cron_str}#{@chore.id}'")
+        end
         format.html { redirect_to @chore, notice: 'Chore was successfully created.' }
         format.json { render json: @chore, status: :created, location: @chore }
       else
@@ -57,6 +84,7 @@ class ChoresController < DwellingItemsController
   # PUT /chores/1
   # PUT /chores/1.json
   def update
+    # TODO: Add cron_str updating
     respond_to do |format|
       if @chore.update_attributes(params[:chore])
         format.html { redirect_to @chore, notice: 'Chore was successfully updated.' }
@@ -71,6 +99,11 @@ class ChoresController < DwellingItemsController
   # DELETE /chores/1
   # DELETE /chores/1.json
   def destroy
+    if @chore.cron_str
+      puts "Removing #{@chore.id} from crontab #{@chore.cron_str}"
+      CronEdit::Crontab.Remove "chore_#{@chore.id}"
+    end
+
     @chore.destroy
 
     respond_to do |format|
@@ -79,9 +112,17 @@ class ChoresController < DwellingItemsController
     end
   end
 
-	private
+  # PUT /chores/1/deactivate
+  # PUT /chores/1/deactivate.json
+  def deactivate
+    permission_denied unless @chore.active
+    @chore.update_attribute(:active, false)
+    redirect_to chores_url, notice: "Chore was successfully deactivated"
+  end
 
-	# Assign @dwelling and @chore if applicable
+  private
+
+  # Assign @dwelling and @chore if applicable
   def get_dwelling_and_chore
     @dwelling = current_dwelling
     if params[:id]
@@ -89,7 +130,8 @@ class ChoresController < DwellingItemsController
     end
   end
 
-	def ensure_chore_belongs_to_current_user
-		permission_denied unless current_user == @chore.owner
-	end
+  def ensure_chore_belongs_to_current_user
+    permission_denied unless current_user == @chore.owner
+  end
+
 end

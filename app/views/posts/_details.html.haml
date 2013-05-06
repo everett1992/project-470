@@ -2,7 +2,7 @@
   %ul.media-list
     %li.media
       %a.pull-left(href="#")
-        %img.media-object(data-src="holder.js/64x64")
+        =profile_picture_tag(post.owner)
       .media-body
         %h4.media-heading
           #{post.owner.name}

@@ -15,8 +15,7 @@
   .field
     = f.label :assigned_user_id
     = f.collection_select :assigned_user_id, @dwelling.users, :id, :name
-  / .field
-  /   = f.label :dwelling_id
-  /   = f.number_field :dwelling_id
-  .actions
+  .field
+    = f.label :when
+    = f.select :cron_str, ["Just Once", "Every M/W/F", "Every T/Th", "Every Sunday"]
     = f.submit 'Save'
