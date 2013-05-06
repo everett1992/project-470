@@ -7,9 +7,9 @@ class EventsController < DwellingItemsController
   # GET /events.json
   def index
 		if params[:past]
-			@events = @dwelling.events.upcoming
-		else
 			@events = @dwelling.events.past
+		else
+			@events = @dwelling.events.upcoming
 		end
 
     respond_to do |format|
