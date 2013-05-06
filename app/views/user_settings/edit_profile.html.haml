@@ -7,19 +7,7 @@
           %li= msg
 
   Fields marked with a * are required
-  .field
-    = f.label 'email*'
-    = f.text_field :email
-  .field
-    = f.label :cellphone
-    = f.label 'Must be in the format: X-XXX-XXX-XXXX'
-    = f.text_field :cellphone
-  .field
-    = f.label :first_name
-    = f.text_field :first_name
-  .field
-    = f.label :last_name
-    = f.text_field :last_name
+  = render 'users/profile_form', f: f
   .actions
     = f.submit 'Save'
 

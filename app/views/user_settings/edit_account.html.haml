@@ -6,11 +6,7 @@
         - @user.errors.full_messages.each do |msg|
           %li= msg
 
-  .field
-    = f.label :new_password
-    = f.password_field :password
-  .field
-    = f.label :confirm_new_password
-    = f.password_field :password_confirmation
+  = render 'users/account_form', f: f
+
   .field
     = f.submit 'Change Password', class: 'btn'
