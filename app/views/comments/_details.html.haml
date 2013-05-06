@@ -2,7 +2,7 @@
   %ul.media-list
     %li.media
       %a.pull-left(href="#")
-        =profile_picture_tag(current_user)
+        =profile_picture_tag(comment.owner)
       .media-body
         %h4.media-heading
           #{comment.owner.name}
