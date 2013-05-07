@@ -1,25 +1,14 @@
-= form_for @bill do |f|
-  - if @bill.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@bill.errors.count, "error")} prohibited this bill from being saved:"
-      %ul
-        - @bill.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for @bill, :html => {:class => 'form-horizontal'} do |f|
+  = f.input :name
+  = f.input :owed_to
+  = f.input :amount
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :owed_to
-    = f.text_field :owed_to
-  .field
-    = f.label :amount
-    = f.text_field :amount
-  .field
-    = f.label :date_due
-    = calendar_datepicker(:date_due, f)
-  .field
-    = f.label :status
-    = f.text_field :status
-  .actions
-    = f.submit 'Save'
+  .control-group
+    = f.label 'date_due'
+    .controls
+      = calendar_datepicker(:date_due, f)
+
+  = f.input :status
+  .control-group
+    .controls
+      = f.submit 'Save'

@@ -1,15 +1,6 @@
-= form_for [@shopping_list, @shopping_list_item] do |f|
-  - if @shopping_list_item.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@shopping_list_item.errors.count, "error")} prohibited this shopping_list_item from being saved:"
-      %ul
-        - @shopping_list_item.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for [@shopping_list, @shopping_list_item], :html => {:class => 'form-horizontal'} do |f|
+  = f.input :name
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.hidden_field :shopping_list_id, value: params[:shopping_list_id]
-  .actions
-    = f.submit 'Save'
+  .control-group
+    .controls
+      = f.button :submit

@@ -1,6 +1,4 @@
 .field
-  = f.label :new_password
-  = f.password_field :password
+  = f.input :password, required: true
 .field
-  = f.label :confirm_new_password
-  = f.password_field :password_confirmation
+  = f.input :password_confirmation, required: true

@@ -1,12 +1,6 @@
-= form_for @post do |f|
-  - if @post.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@post.errors.count, "error")} prohibited this message from being saved:"
-      %ul
-        - @post.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for @post, :html => {:class => 'form-horizontal'} do |f|
+  = f.input :body, input_html: {rows: 5, class: 'input-block-level'}
 
-  .field
-    = f.text_area :body, rows: 5, class: 'input-block-level'
-  .actions
-    = f.submit 'Save'
+  .control-group
+    .controls
+      = f.button :submit

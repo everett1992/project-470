@@ -1,10 +1,6 @@
 .field
-  = f.label :cellphone
-  = f.label 'Must be in the format: X-XXX-XXX-XXXX'
-  = f.text_field :cellphone
+  = f.input :cellphone, hint: 'Format must be X-XXX-XXX-XXXX'
 .field
-  = f.label :first_name
-  = f.text_field :first_name
+  = f.input :first_name
 .field
-  = f.label :last_name
-  = f.text_field :last_name
+  = f.input :last_name

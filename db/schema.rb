@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130505203008) do
+ActiveRecord::Schema.define(:version => 20130507012835) do
 
   create_table "bill_payments", :force => true do |t|
     t.integer  "user_id"
@@ -92,11 +92,11 @@ ActiveRecord::Schema.define(:version => 20130505203008) do
   add_index "invites", ["token"], :name => "index_invites_on_token"
 
   create_table "messages", :force => true do |t|
-    t.string   "body"
+    t.text     "body",               :limit => 255
     t.integer  "dwelling_id"
     t.integer  "owner_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
     t.string   "type"
     t.integer  "dwelling_item_id"
     t.string   "dwelling_item_type"

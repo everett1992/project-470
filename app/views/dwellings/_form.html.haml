@@ -1,16 +1,8 @@
-= form_for @dwelling do |f|
-  - if @dwelling.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@dwelling.errors.count, "error")} prohibited this dwelling from being saved:"
-      %ul
-        - @dwelling.errors.full_messages.each do |msg|
-          %li= msg
+= simple_form_for @dwelling, :html => {:class => 'form-horizontal'}do |f|
+  = f.input :name
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :time_zone
-    = f.collection_select :time_zone, ActiveSupport::TimeZone.all, :name, :to_s
-  .actions
-    = f.submit 'Save'
+  = f.input :time_zone
+
+  .control-group
+    .controls
+      = f.button :submit

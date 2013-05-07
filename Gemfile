@@ -10,9 +10,6 @@ gem 'mysql2', group: :production
 gem 'aws-sdk'
 
 
-gem 'twitter-bootstrap-rails'
-gem 'haml'
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -38,7 +35,11 @@ end
 gem 'faker' # library for generating fake data (used in the seed)
 
 gem 'jquery-rails'
+
+gem 'haml'
+gem 'twitter-bootstrap-rails'
 gem 'bootstrap-datepicker-rails' # javascript datepicker
+gem 'simple_form'
 
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby', '~> 3.0.0'

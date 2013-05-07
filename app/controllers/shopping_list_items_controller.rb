@@ -1,4 +1,8 @@
 class ShoppingListItemsController < ApplicationController
+	layout 'dwelling_layout'           # use the dwellign layout
+	before_filter :load_upcoming_items # Load items to show in the sidebar
+	before_filter :logged_in?          # Check that the user is logged in
+
   before_filter :get_shopping_list_of_item
 
   def index
